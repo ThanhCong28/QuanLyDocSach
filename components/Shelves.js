@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, View, Text, StyleSheet, FlatList } from 'react-native';
+import { Image, View, Text, StyleSheet, FlatList, Item } from 'react-native';
 import ShelfImage from '../assets/books_128.png';
 
 const styleShelves = StyleSheet.create({
@@ -35,10 +35,7 @@ const styleShelves = StyleSheet.create({
     },
 });
 
-//<View style={styleShelves.square}>
-//</View>
-
-const Item = (props) => {
+const ItemShelf = (props) => {
   return (
     <View style={styleShelves.item}>
       <View style={styleShelves.itemLeft}>
@@ -50,18 +47,54 @@ const Item = (props) => {
 }
 
 const Shelves = (props) => {
+  const dataShelf = [
+      {
+        id: 1,
+        name: "Toán học",
+      },
+      {
+        id: 2,
+        name: "Kinh tế",
+      },
+      {
+        id: 3,
+        name: "English",
+      },
+      {
+        id: 4,
+        name: "Truyện cười",
+      },
+      {
+        id: 5,
+        name: "Tản văn",
+      },
+      {
+        id: 6,
+        name: "Công nghệ",
+      },
+      {
+        id: 7,
+        name: "Vật Lý",
+      },
+      {
+        id: 8,
+        name: "Khoa học",
+      },
+      {
+        id: 9,
+        name: "Truyện cười",
+      },
+      {
+        id: 10,
+        name: "Giáo dục",
+      },
+    ];
   return (
     <View style={styleShelves.container}>
       <FlatList
-        data={[
-          {key: 'Toán học'},
-          {key: 'Kinh tế'},
-          {key: 'English'},
-          {key: 'Truyện cười'},
-          {key: 'Tản văn'},
-          {key: 'Công nghệ'},
-        ]}
-        renderItem={({item}) => <Item keyItem={item.key} quantity={props.quantity}/>}
+        data={dataShelf}
+        renderItem={({ item }) => <Item name={item.name} />}
+        keyExtractor={item => item.id}
       />
     </View>
   );
