@@ -1,5 +1,5 @@
-import React from 'react';
-import { Image, View, Text, StyleSheet, FlatList, Item } from 'react-native';
+import React, {useState} from 'react';
+import { Image, View, Text, StyleSheet, FlatList, SafeAreaView, StatusBar, TouchableOpacity } from 'react-native';
 import ShelfImage from '../assets/books_128.png';
 
 const styleShelves = StyleSheet.create({
@@ -12,7 +12,6 @@ const styleShelves = StyleSheet.create({
     padding: 5,
     fontSize: 32,
     height: 60,
-    backgroundColor: "#ff00ff",
     marginVertical: 8,
     flexDirection: 'row',
     alignItems: 'center'
@@ -35,19 +34,7 @@ const styleShelves = StyleSheet.create({
     },
 });
 
-const ItemShelf = (props) => {
-  return (
-    <View style={styleShelves.item}>
-      <View style={styleShelves.itemLeft}>
-          <Image source={ShelfImage}/>
-          <Text style={styleShelves.itemText}>{props.keyItem} ({props.quantity})</Text>
-      </View>
-    </View>
-  );
-}
-
-const Shelves = (props) => {
-  const dataShelf = [
+const dataShelf = [
       {
         id: 1,
         name: "Toán học",
@@ -89,14 +76,43 @@ const Shelves = (props) => {
         name: "Giáo dục",
       },
     ];
+
+const ItemShelf = ({keyItem, quantity, onPress, backgroundColor}) => (
+    <TouchableOpacity onPress={onPress} style={[styleShelves.item, backgroundColor]}>
+    <View style={styleShelves.item}>
+      <View style={styleShelves.itemLeft}>
+          <Image source={ShelfImage}/>
+          <Text style={styleShelves.itemText}>{keyItem} ({quantity})</Text>
+      </View>
+    </View>
+    </TouchableOpacity>
+  );
+
+const Shelves = ({quantity}) => {
+  const [selectedId, setSelectedId] = useState(null);
+
+  const renderItem = ({ item }) => {
+    const backgroundColor = item.id === selectedId ? "#ff0000" : "#ff00ff";
+//    const color = item.id === selectedId ? 'white' : 'black';
+    return (
+      <ItemShelf
+        keyItem={item.name}
+        quantity={quantity}
+        onPress={() => setSelectedId(item.id)}
+        backgroundColor={{ backgroundColor }}
+//        textColor={{ color }}
+      />
+    );
+  };
   return (
-    <View style={styleShelves.container}>
+    <SafeAreaView style={styleShelves.container}>
       <FlatList
         data={dataShelf}
-        renderItem={({ item }) => <Item name={item.name} />}
+        renderItem={renderItem}
         keyExtractor={item => item.id}
+        extraData={selectedId}
       />
-    </View>
+    </SafeAreaView >
   );
 }
 
