@@ -21,14 +21,6 @@ const styleShelves = StyleSheet.create({
       alignItems: 'center',
       flexWrap: 'wrap',
     },
-    square: {
-      width: 24,
-      height: 24,
-      backgroundColor: "#ff0000",
-      opacity: 0.4,
-      borderRadius: 5,
-      marginRight: 15,
-    },
     itemText: {
       maxWidth: '80%',
     },

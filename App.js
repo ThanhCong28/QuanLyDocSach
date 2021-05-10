@@ -9,6 +9,7 @@
 import React, {useState} from 'react';
 import type {Node} from 'react';
 import Shelves from './components/Shelves';
+import Settings from './components/Settings';
 import {
   SafeAreaView,
   Dimensions,
@@ -105,7 +106,9 @@ const SecondRoute = () => (
 );
 
 const ThirdRoute = () => (
-  <View style={{ flex: 1, backgroundColor: '#ff0000' }} />
+//  <View style={{ flex: 1, backgroundColor: '#ff0000' }} >
+    <Settings />
+//  </View>
 );
 
 //export default function TabViewExample() {
