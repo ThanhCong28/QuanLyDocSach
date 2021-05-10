@@ -6,6 +6,7 @@ const styleShelves = StyleSheet.create({
   container: {
    flex: 1,
    paddingTop: 22,
+   paddingBottom: 90,
    marginHorizontal: 16
   },
   item: {

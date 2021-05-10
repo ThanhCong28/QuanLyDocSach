@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   },
   addShelf: {
     position: 'absolute',
-    bottom: 60,
+    bottom: 15,
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -91,17 +91,17 @@ const SecondRoute = () => (
     <Shelves quantity='28'/>
 
     {/* Phần Tạo thêm một Shelf */}
-        <KeyboardAvoidingView
-          behavior={Platform.OS == "ios" ? "padding" : "height"}
-          style={styles.addShelf}
-        >
-          <TextInput style={styles.input} placeholder={'Nhap ten Shelf'} />
-          <TouchableOpacity>
-            <View style={styles.addWrapper}>
-              <Text style={styles.addText}>+</Text>
-            </View>
-          </TouchableOpacity>
-        </KeyboardAvoidingView>
+    <KeyboardAvoidingView
+      behavior={Platform.OS == "ios" ? "padding" : "height"}
+      style={styles.addShelf}
+    >
+      <TextInput style={styles.input} placeholder={'Nhap ten Shelf'} />
+      <TouchableOpacity>
+        <View style={styles.addWrapper}>
+          <Text style={styles.addText}>+</Text>
+        </View>
+      </TouchableOpacity>
+    </KeyboardAvoidingView>
   </View>
 );
 
