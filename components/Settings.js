@@ -45,7 +45,10 @@ const dataSettings = [
     ];
 
 const ItemSettings = ({keyItem, onPress, backgroundColor}) => (
-    <TouchableOpacity onPress={onPress} style={[styleSettings.item, backgroundColor]}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[styleSettings.item, backgroundColor]}
+      activeOpacity={0.5}>
     <View style={styleSettings.item}>
       <View style={styleSettings.itemLeft}>
           <Text style={styleSettings.itemText}>{keyItem}</Text>
