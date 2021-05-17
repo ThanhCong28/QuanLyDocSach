@@ -57,3 +57,6 @@ rồi sau đó tắt Terminal đi, và bật lại 2 màn hình Terminal dùng c
 *** Xử lí khi gặp lỗi ***
 1, Lỗi "Module AppRegistry is not registered callable module (calling runApplication)"
 => chạy lệnh > npm start -- --reset-cache
+
+
+*** Cài đặt React Navigation ***

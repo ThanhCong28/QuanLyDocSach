@@ -58,7 +58,14 @@ const styleShelves = StyleSheet.create({
 const Shelves = () => {
   const [selectedId, setSelectedId] = useState(null);
   const [shelf, setShelf] = useState();
-  const [dataShelf, setDataShelf] = useState([]);
+  const [dataShelf, setDataShelf] = useState(
+    [
+      {id: 0, name: 'Toán học'},
+      {id: 1, name: 'Vật lý'},
+      {id: 2, name: 'Truyện ngắn'},
+      {id: 3, name: 'Công nghệ'},
+    ]
+  );
 
     const handleAddShelf = () => {
         Keyboard.dismiss();
