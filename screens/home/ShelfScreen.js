@@ -17,8 +17,8 @@ import {
     SafeAreaView,
     TouchableOpacity,
     KeyboardAvoidingView,
-    Alert,
-    Platform
+    Platform,
+    Modal
 } from 'react-native';
 
 import ShelfImage from '../../resource/img/books_128.png';
@@ -84,40 +84,119 @@ function ShelfScreen( {navigation} ) {
      * @constructor
      */
 
-    const [selectedId, setSelectedId] = React.useState(null);
-    const [shelf, setShelf] =React. useState();
-    const [dataShelf, setDataShelf] = React.useState([
+    const [selectedId, setSelectedId] = React.useState(null);  // ID của view item (shelf) đang focus hiện tại - bằng thao tác Press
+    const [shelfId, setShelfId] = React. useState();  // Quản lý Id của (chỉ một) Shelf cần bị xóa hoăc Đổi tên - khi LongPress
+    const [shelfName, setShelfName] = React. useState();  // Quản lý tên (chỉ một) Shelf cần được thêm vào hoặc đổi tên
+    const [shelfList, setShelfList] = React.useState([  // Danh sách đối tượng Shelf hiện tại (không phải View)
             {id: 0, name: 'Toán học'},
             {id: 1, name: 'Vật lý'},
             {id: 2, name: 'Truyện ngắn'},
             {id: 3, name: 'Công nghệ'},
+            {id: 4, name: 'Toán học'},
+            {id: 5, name: 'Vật lý'},
+            {id: 6, name: 'Truyện ngắn'},
+            {id: 7, name: 'Công nghệ'},
         ]
     );
+
+    const [visible, setVisible] = React.useState(false);  // Quyết định ẩn / hiện Custom dialog (Cancel-Rename-Delete)
+    const [renamePress, setRename] = React.useState(false);  // biến đếm số lần ấn vào button "Rename"
+    const [deletePress, setDelete] = React.useState(false);  // biến đếm số lần ấn vào button "Delete"
 
     return (
         <SafeAreaView style={styleShelves.container}>
             <FlatList
-                data={dataShelf}
+                data={shelfList}
                 renderItem={renderItem}
                 keyExtractor={item => item.id}
                 extraData={selectedId}
             />
-            {/*<KeyboardAvoidingView*/}
-            {/*    behavior={Platform.OS === "ios" ? "padding" : "height"}*/}
-            {/*    style={styleShelves.addShelf} >*/}
-            {/*    <TextInput style={styleShelves.input}*/}
-            {/*               placeholder={'Nhap ten Shelf'}*/}
-            {/*               value={shelf} onChangeText={text => setShelf(text)}/>*/}
-            {/*    <TouchableOpacity*/}
-            {/*        activeOpacity={0.7}*/}
-            {/*        onPress={() => handleAddShelf()} >*/}
-            {/*        <View style={styleShelves.addWrapper}>*/}
-            {/*            <Text style={styleShelves.addText}>+</Text>*/}
-            {/*        </View>*/}
-            {/*    </TouchableOpacity>*/}
-            {/*</KeyboardAvoidingView>*/}
+
+            <Modal visible={visible} transparent={true} >
+                <View
+                    style={{
+                        paddingTop: 20,
+                        marginTop: 200,
+                        flexDirection: "column",
+                        height: '40%',
+                        width: '80%',
+                        alignSelf: 'center',
+                        alignItems:'center',
+                        backgroundColor: 'green',
+                    }}>
+                    <Text style={{height: 60, width: 250,
+                        paddingLeft: 10,paddingTop: 20, backgroundColor: 'blue'}}>{titleDialog()}
+                    </Text>
+                    <TextInput
+                        style={{paddingTop: 20, marginTop: 20,height: 60, width: 300,backgroundColor: (renamePress ? 'red' : 'green')}}
+                        editable={renamePress}
+                        onChangeText={setShelfName}
+                        placeholder={(renamePress ? 'Nhap ten shelf moi vao day' : '')}
+                    />
+                    <ButtonsConfirm/>
+                </View>
+            </Modal>
         </SafeAreaView >
     );
+
+    function titleDialog() {
+        if (renamePress) return "Ban hay nhap ten gia sach vao o ben duoi :";
+        else if (deletePress) return "Ban hay xac nhan chac chan Xoa gia sach ?";
+        else return "Ban muon Doi ten hay Xoa gia sach ?";
+    }
+
+    function onClose () {
+        setVisible(false);
+        setRename(false);
+        setDelete(false);
+    }
+
+    function ButtonsConfirm() {
+        return (
+            <View style={{paddingTop: 20, flexDirection: 'row', alignSelf: 'center' }}>
+                <TouchableOpacity  // button "Cancel"
+                    onPress={onClose} >
+                    <View style={{width: 80, height: 40, marginRight: 10, backgroundColor: 'yellow', }}>
+                        <Text>CANCEL</Text>
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity  // button "Rename"
+                    disabled={deletePress}
+                    onPress={() => {
+                        console.log("Rename Button : " + renamePress);
+                        console.log("shelfId : " + shelfId);
+                        if (!renamePress) {
+                            setRename(true);
+                        } else {
+                            RenameItem(shelfId);
+                            onClose();
+                        }
+                    }} >
+                    <View style={{width: 80, height: 40, marginRight: 10, backgroundColor: (deletePress ? 'green' : 'yellow')}}>
+                        <Text style={{color: (deletePress ? 'green' : 'black')}}>{renamePress ? "OK" : "RENAME"}</Text>
+                    </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity  // button "Delete"
+                    disabled={renamePress}
+                    onPress={() => {
+                        console.log("Delete Button : " + deletePress);
+                        console.log("shelfId : " + shelfId);
+                        if (!deletePress) {
+                            setDelete(true);
+                        } else {
+                            DeleteItem(shelfId);
+                            onClose();
+                        }
+                    }} >
+                    <View style={{width: 80, height: 40, marginRight: 10, backgroundColor: (renamePress ? 'green' : 'yellow')}}>
+                        <Text style={{color: (renamePress ? 'green' : 'black')}}>{deletePress ? "OK" : "DELETE"}</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
+        )
+    }
 
     function renderItem({ item }) {
         const backgroundColor = item.id === selectedId ? "#ff0000" : "#ff00ff";
@@ -141,7 +220,11 @@ function ShelfScreen( {navigation} ) {
         return (
             <TouchableOpacity
                 onPress={onPress}
-                onLongPress={() => ConfirmDeleteItemAlert(itemId)}
+                onLongPress={() => {
+                        setVisible(true);  // Show Confirm dialog gom 3 button : Cancel - Remove - Delete
+                        setShelfId(itemId);  // Danh dau index cua item vua Long Press
+                    }
+                }
                 style={[styleShelves.item, backgroundColor]}
                 activeOpacity={0.5} >
                 <View style={styleShelves.item}>
@@ -154,36 +237,17 @@ function ShelfScreen( {navigation} ) {
         );
     }
 
-    function ConfirmDeleteItemAlert(index) {
-        return (
-            Alert.alert(
-                "Xác nhận xóa",
-                "Bạn có muốn xóa giá sách này không?",
-                [
-                    {
-                        text: "Cancel",
-                        onPress: () => console.log("Cancel pressed")
-                    },
-                    {
-                        text: "OK",
-                        onPress: () => DeleteItem(index),
-                    }
-                ]
-            )
-        );
-    }
-
     function handleAddShelf() {
-        Keyboard.dismiss();
-        console.log("dataShelf len: ", dataShelf.length);
-        setDataShelf([...dataShelf, {id: dataShelf.length, name: shelf}])
-        console.log("dataShelf: ", dataShelf);
-        setShelf(null);
+        //Keyboard.dismiss();
+        console.log("shelfList len: ", shelfList.length);
+        setShelfList([...shelfList, {id: shelfList.length, name: shelfName}])
+        console.log("shelfList: ", shelfList);
+        setShelfName(null);
     }
 
     function DeleteItem (index) {
         console.log("index = ", index);
-        let itemsCopy = [...dataShelf];
+        let itemsCopy = [...shelfList];
         console.log("itemsCopy 1: ", itemsCopy);
         itemsCopy.splice(index, 1);
         console.log("itemsCopy 2: ", itemsCopy);
@@ -194,8 +258,24 @@ function ShelfScreen( {navigation} ) {
             );
         }
 
-        setDataShelf(dataShelf => itemsCopy.map(RearrangeIndex));
-        console.log("dataShelf: ", dataShelf);
+        setShelfList(() => itemsCopy.map(RearrangeIndex));
+        console.log("shelfList: ", shelfList);
+    }
+
+    function RenameItem (index) {
+        console.log("index = ", index);
+        console.log("shelfName = ", shelfName);
+        let itemsCopy = [...shelfList];
+        console.log("itemsCopy 1: ", itemsCopy);
+
+        const RearrangeIndex = (item) => {
+            return (
+                item.id !== index ? item : {id: item.id, name: shelfName}
+            );
+        }
+
+        setShelfList(() => itemsCopy.map(RearrangeIndex));
+        console.log("shelfList: ", shelfList);
     }
 }
 
