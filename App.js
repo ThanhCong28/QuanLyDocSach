@@ -1,111 +1,68 @@
 /**
- * Sample React Native App
- * https://github.com/facebook/react-native
+ * Ung dung Quan ly Doc sach
+ * https://github.com/ThanhCong28/QuanLyDocSach.git
  *
- * @format
- * @flow strict-local
+ * Copyright: Nguyen Thanh Cong - 2021
  */
+import 'react-native-gesture-handler';
+import * as React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import React, {useState} from 'react';
-import type {Node} from 'react';
-import Shelves from './components/Shelves';
-import Settings from './components/Settings';
-import {
-  SafeAreaView,
-  Dimensions,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Button,
-  Text,
-  useColorScheme,
-  useWindowDimensions,
-  View,
-  KeyboardAvoidingView,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import HomeHeader from './screens/home/HomeHeader';
+import BookScreen from './screens/home/BookScreen';
+import ShelfScreen from './screens/home/ShelfScreen';
+import SettingScreen from './screens/home/SettingScreen';
+import BookDetailScreen from './screens/detail/BookDetailScreen';
+import ShelfDetailScreen from "./screens/detail/ShelfDetailScreen";
+import AddBookScreen from "./screens/detail/AddBookScreen";
+import AddShelfScreen from "./screens/detail/AddShelfScreen";
 
-import { TabView, SceneMap } from 'react-native-tab-view';
+const Stack = createStackNavigator();
+const Tab = createMaterialTopTabNavigator();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#E8EAED',
-  },
-  tasksWrapper: {
-    paddingTop: 80,
-    paddingHorizontal: 20,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: 'bold'
-  },
-  items: {
-    marginTop: 30,
-  },
-});
+function App() {
+    /**
+     * Ham Main: Thiet ke app o dang Stack Navigator,
+     * vi ngoai cai Tab navigator o man hinh chinh, thi cac man hinh con lai deu de Full.
+     * @returns {JSX.Element}
+     * @constructor
+     */
 
-const FirstRoute = () => (
-  <View style={{ flex: 1, backgroundColor: '#00ffff' }}>
-  <Text>Welcome 1</Text>
-  </View>
-);
+    const [currTabIndex, setCurrTabIndex] = React.useState('');  // bien luu index cua 3 tab tren Home (0, 1, 2)
 
-const SecondRoute = () => (
-
-  <View style={{ flex: 1, backgroundColor: '#f9c2ff' }} >
-    <Shelves />
-  </View>
-);
-
-const ThirdRoute = () => (
-//  <View style={{ flex: 1, backgroundColor: '#ff0000' }} >
-    <Settings />
-//  </View>
-);
-
-//export default function TabViewExample() {
-const TabViewComponent = () => {
-//function TabViewComponent() {
-  const layout = useWindowDimensions();
-
-  const [index, setIndex] = React.useState(0);
-  const [routes] = React.useState([
-    { key: 'first', title: 'Books' },
-    { key: 'second', title: 'Shelves' },
-    { key: 'third', title: 'Settings' }
-  ]);
-
-  const renderScene = SceneMap({
-    first: FirstRoute,
-    second: SecondRoute,
-    third: ThirdRoute,
-  });
-
-//  const renderTabBar = props => (
-//    <TabBar
-////      {...props}
-//      indicatorStyle={{ backgroundColor: 'white' }}
-//      style={{ backgroundColor: 'pink' }}
-//    />
-//  );
-
-  return (
-      <TabView
-                    navigationState={{ index, routes }}
-                    renderScene={renderScene}
-//                    renderTabBar={renderTabBar}
-                    onIndexChange={setIndex}
-                    initialLayout={{ width: layout.width }}
-                  />
-  );
-}
-
-const AppQuanLySach = () => {
-  return (
-      <TabViewComponent />
+    return (
+        <NavigationContainer>
+            <Stack.Navigator initialRouteName="HomeStackApp">
+                <Stack.Screen name="HomeTab" component={HomeTabNavigator} options={{ headerTitle: () => <HomeHeader currentTabIndex={currTabIndex}/> }} />
+                <Stack.Screen name="BookDetails" component={BookDetailScreen} />
+                <Stack.Screen name="ShelfDetails" component={ShelfDetailScreen} />
+                <Stack.Screen name="AddBook" component={AddBookScreen} />
+                <Stack.Screen name="AddShelf" component={AddShelfScreen} />
+            </Stack.Navigator>
+        </NavigationContainer>
     );
+
+    function HomeTabNavigator() {
+        /**
+         * TabNavigator o Home, gom 3 Tab: Books, Shelves, Settings
+         * @returns {JSX.Element}
+         * @constructor
+         */
+        return (
+            <Tab.Navigator>
+                <Tab.Screen name="Books" component={BookScreen} options={ ({navigation}) => setCurrentTabIndex(0, navigation)} />
+                <Tab.Screen name="Shelves" component={ShelfScreen} options={ ({navigation}) => setCurrentTabIndex(1, navigation)} />
+                <Tab.Screen name="Settings" component={SettingScreen} options={ ({navigation}) => setCurrentTabIndex(2, navigation)} />
+            </Tab.Navigator>
+        );
+
+        function setCurrentTabIndex(index, navigation) {  // ham set lai index (vao bien currTabIndex) ung voi tab dang focus hien tai
+            console.log("HomeTabNavigator : " + currTabIndex);
+            if (navigation.isFocused()) setCurrTabIndex(index);
+        }
+    }
 }
 
-export default AppQuanLySach;
+export default App;
