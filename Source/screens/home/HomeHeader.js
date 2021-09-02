@@ -38,7 +38,6 @@ function HomeHeader( {currentTabIndex} ) {
             style={styleHome.homeButton}
             onPress={() => {
                 if (currentTabIndex === 0) navigation.navigate("AddBook");
-                else if (currentTabIndex === 1) navigation.navigate("AddShelf");
               }
             }
           />

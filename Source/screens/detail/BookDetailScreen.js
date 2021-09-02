@@ -5,9 +5,9 @@
  * Copyright: Nguyen Thanh Cong - 2021
  */
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import {View, Text, Button} from 'react-native';
 
-function BookDetailScreen() {
+function BookDetailScreen( {navigation} ) {
     /**
      * Man hinh chi tiet thong tin cua moi quyen sach.
      * @returns {JSX.Element} Chi tiet thong tin sach
@@ -16,6 +16,10 @@ function BookDetailScreen() {
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
       <Text>BookDetail Screen area</Text>
+        <Button
+            title="Go to AddBook screen"
+            onPress={() => navigation.navigate('AddBook')}
+        />
     </View>
   );
 }

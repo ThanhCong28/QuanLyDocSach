@@ -1,0 +1,22 @@
+Đặt vấn đề: Mục đích và phạm vi dự án
+
+**Đây là dự án cá nhân, phát triển một ứng dụng Quản lý việc đọc sách của mỗi người dùng với các tính năng chính: (Phase 0) - version 0.x.y**
+- Quản lý danh sách các sách vở, tài liệu hiện có (thêm sửa xóa cập nhật)
+- Phân loại và quản lý sách theo từng Giá sách (chủ đề)
+- Quản lý tiến độ đọc (trạng thái, % hoàn thành, cài đặt ngày bắt đầu và kết thúc)
+- Note tóm tắt nội dung sách, Comment lại cảm tưởng ...
+- Đồng bộ dữ liệu giữa các màn hình trong toàn bộ app
+- Giao diện đơn giản và thuận tiện khi sử dụng
+
+**Tính năng nâng cao: (Phase 1) - version 1.x.y**
+- Chức năng lọc, sắp xếp, tìm kiếm khi xem danh sách
+- Thống kê, báo cáo (vẽ biểu đồ) lượng sách đã xem theo thời gian / trạng thái / chủ đề
+- Nhập, xuất ra file ngoài
+- Đăng nhập, đăng xuất
+- Lưu trữ dữ liệu riêng của từng người dùng
+
+**Mục đích : **
+- phát triển app sử dụng cho riêng mình - nếu thấy hay thì sẽ chia sẻ cho cộng đồng dùng miễn phí
+- học & thực hành React Native
+
+**Ý tưởng thiết kế : **tham khảo chủ yếu từ app "Bookshelf" của Damir Juretic.
