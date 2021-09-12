@@ -4,7 +4,7 @@
  *
  * Copyright: Nguyen Thanh Cong - 2021
  */
-import * as React from 'react';
+import React from 'react';
 import { View, Text } from 'react-native';
 
 function AddBookScreen() {

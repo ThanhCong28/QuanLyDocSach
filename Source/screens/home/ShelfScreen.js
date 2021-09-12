@@ -4,7 +4,7 @@
  *
  * Copyright: Nguyen Thanh Cong - 2021
  */
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
     Image,
     View,
@@ -20,6 +20,7 @@ import {
     Platform,
     Modal
 } from 'react-native';
+import {useNavigation} from "@react-navigation/native";
 
 import ShelfImage from '../../resource/img/books_128.png';
 
@@ -76,7 +77,7 @@ const styleShelves = StyleSheet.create({
     addText: {},
 });
 
-function ShelfScreen( {navigation} ) {
+function ShelfScreen( props ) {
     /**
      * Man hinh cua Tab Shelves o Home.
      * @param navigation Dieu huong man hinh
@@ -84,10 +85,11 @@ function ShelfScreen( {navigation} ) {
      * @constructor
      */
 
-    const [selectedId, setSelectedId] = React.useState(null);  // ID của view item (shelf) đang focus hiện tại - bằng thao tác Press
-    const [shelfId, setShelfId] = React. useState();  // Quản lý Id của (chỉ một) Shelf cần bị xóa hoăc Đổi tên - khi LongPress
-    const [shelfName, setShelfName] = React. useState();  // Quản lý tên (chỉ một) Shelf cần được thêm vào hoặc đổi tên
-    const [shelfList, setShelfList] = React.useState([  // Danh sách đối tượng Shelf hiện tại (không phải View)
+    const navigation = useNavigation()
+    const [selectedId, setSelectedId] = useState(null);  // ID của view item (shelf) đang focus hiện tại - bằng thao tác Press
+    const [shelfId, setShelfId] = useState();  // Quản lý Id của (chỉ một) Shelf cần bị xóa hoăc Đổi tên - khi LongPress
+    const [shelfName, setShelfName] = useState();  // Quản lý tên (chỉ một) Shelf cần được thêm vào hoặc đổi tên
+    const [shelfList, setShelfList] = useState([  // Danh sách đối tượng Shelf hiện tại (không phải View)
             {id: 0, name: 'Toán học'},
             {id: 1, name: 'Vật lý'},
             {id: 2, name: 'Truyện ngắn'},
@@ -98,10 +100,18 @@ function ShelfScreen( {navigation} ) {
             {id: 7, name: 'Công nghệ'},
         ]
     );
+    //const [shelfQuantity, setShelfQuantity] = React. useState();  // Quản lý số lượng shelf hiện tại
+    useEffect(() => {
+        let title = (shelfList.length <= 1 ? (" (" + shelfList.length + " shelf)") : " (" + shelfList.length + " shelves)");
+        if (navigation.isFocused()) {
+            props.onCurrentIndexListener(1);
+            props.onQuantityListener(title);
+        }
+    })
 
-    const [visible, setVisible] = React.useState(false);  // Quyết định ẩn / hiện Custom dialog (Cancel-Rename-Delete)
-    const [renamePress, setRename] = React.useState(false);  // biến đếm số lần ấn vào button "Rename"
-    const [deletePress, setDelete] = React.useState(false);  // biến đếm số lần ấn vào button "Delete"
+    const [visible, setVisible] = useState(false);  // Quyết định ẩn / hiện Custom dialog (Cancel-Rename-Delete)
+    const [renamePress, setRename] = useState(false);  // biến đếm số lần ấn vào button "Rename"
+    const [deletePress, setDelete] = useState(false);  // biến đếm số lần ấn vào button "Delete"
 
     return (
         <SafeAreaView style={styleShelves.container}>
@@ -112,7 +122,7 @@ function ShelfScreen( {navigation} ) {
                 extraData={selectedId}
             />
 
-            <Modal visible={visible} transparent={true} >
+            <Modal visible={visible} transparent={true}>
                 <View
                     style={{
                         paddingTop: 20,
@@ -258,7 +268,7 @@ function ShelfScreen( {navigation} ) {
             );
         }
 
-        setShelfList(() => itemsCopy.map(RearrangeIndex));
+        setShelfList(itemsCopy.map(RearrangeIndex));
         console.log("shelfList: ", shelfList);
     }
 
@@ -274,7 +284,7 @@ function ShelfScreen( {navigation} ) {
             );
         }
 
-        setShelfList(() => itemsCopy.map(RearrangeIndex));
+        setShelfList(itemsCopy.map(RearrangeIndex));
         console.log("shelfList: ", shelfList);
     }
 }

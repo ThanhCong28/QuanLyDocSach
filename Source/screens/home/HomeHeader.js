@@ -4,7 +4,7 @@
  *
  * Copyright: Nguyen Thanh Cong - 2021
  */
-import * as React from 'react';
+import React from 'react';
 import { Button, View, Text, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -19,7 +19,7 @@ const styleHome = StyleSheet.create({
   }
 });
 
-function HomeHeader( {currentTabIndex} ) {
+function HomeHeader( {currentTabIndex, headerTitle} ) {
     /**
      * Phan Header o Home.
      * @param currentTabIndex index cua tab tren Home (0, 1, 2)
@@ -31,9 +31,10 @@ function HomeHeader( {currentTabIndex} ) {
     return (
     <View style={styleHome.homeHeader}>
         <Text style={styleHome.homeText}>
-          BookManager
+            {headerTitle}
         </Text>
         <Button
+            disabled={currentTabIndex === 2}
             title="+"
             style={styleHome.homeButton}
             onPress={() => {

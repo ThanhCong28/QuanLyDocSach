@@ -5,7 +5,7 @@
  * Copyright: Nguyen Thanh Cong - 2021
  */
 import 'react-native-gesture-handler';
-import * as React from 'react';
+import React, {useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -19,7 +19,7 @@ import ShelfDetailScreen from "./screens/detail/ShelfDetailScreen";
 import AddBookScreen from "./screens/detail/AddBookScreen";
 import ShelfDetailScreenHeader from "./screens/detail/ShelfDetailScreenHeader";
 
-const Stack = createStackNavigator();
+const RootStack = createStackNavigator();
 const Tab = createMaterialTopTabNavigator();
 
 function App() {
@@ -30,37 +30,70 @@ function App() {
      * @constructor
      */
 
-    const [currTabIndex, setCurrTabIndex] = React.useState('');  // bien luu index cua 3 tab tren Home (0, 1, 2)
-
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName="HomeStackApp">
-                <Stack.Screen name="HomeTab" component={HomeTabNavigator} options={{ headerTitle: () => <HomeHeader currentTabIndex={currTabIndex}/> }} />
-                <Stack.Screen name="BookDetails" component={BookDetailScreen} />
-                <Stack.Screen name="ShelfDetails" component={ShelfDetailScreen} options={{ headerTitle: () => <ShelfDetailScreenHeader/>}} />
-                <Stack.Screen name="AddBook" component={AddBookScreen} />
-            </Stack.Navigator>
+            <RootStack.Navigator initialRouteName="HomeStackApp" >
+                <RootStack.Screen name="HomeTab" component={HomeTabNavigator} />
+                <RootStack.Screen name="BookDetails" component={BookDetailScreen} />
+                <RootStack.Screen name="ShelfDetails" component={ShelfDetailScreen} options={{ headerTitle: () => <ShelfDetailScreenHeader/>}} />
+                <RootStack.Screen name="AddBook" component={AddBookScreen} />
+            </RootStack.Navigator>
         </NavigationContainer>
     );
 
-    function HomeTabNavigator() {
+    function HomeTabNavigator({ navigation, route }) {
         /**
          * TabNavigator o Home, gom 3 Tab: Books, Shelves, Settings
          * @returns {JSX.Element}
          * @constructor
          */
+
+        const [currTabIndex, setCurrTabIndex] = useState(0);  // bien luu index cua 3 tab tren Home (0, 1, 2)
+        const [header, setHeader] = useState('');  // bien luu title o Home
+
+        function BookScreenWithListener() {
+            console.log("HomeTabNavigator at BookScreen bf: " + currTabIndex);
+            let NewScreen = <BookScreen onCurrentIndexListener={setCurrTabIndex} onQuantityListener={setHeader}/>;
+            navigation.setOptions({
+                headerTitle: () => {
+                    console.log("HomeTabNavigator at BookScreen af: " + currTabIndex);
+                    return (<HomeHeader currentTabIndex={currTabIndex} headerTitle={"Book manager" + header}/>)
+                }
+            });
+            return NewScreen;
+        }
+
+        function ShelfScreenWithListener() {
+            console.log("HomeTabNavigato at ShelfScreen bf: " + currTabIndex);
+            let NewScreen = <ShelfScreen onCurrentIndexListener={setCurrTabIndex} onQuantityListener={setHeader}/>;
+            navigation.setOptions({
+                headerTitle: () => {
+                    console.log("HomeTabNavigator at ShelfScreen af: " + currTabIndex);
+                    return (<HomeHeader currentTabIndex={currTabIndex} headerTitle={"Book manager" + header}/>)
+                }
+            });
+            return NewScreen;
+        }
+
+        function SettingScreenWithListener() {
+            console.log("HomeTabNavigator at SettingScreen bf: " + currTabIndex);
+            let NewScreen = <SettingScreen onCurrentIndexListener={setCurrTabIndex} onQuantityListener={setHeader}/>;
+            navigation.setOptions({
+                headerTitle: () => {
+                    console.log("HomeTabNavigator at SettingScreen af: " + currTabIndex);
+                    return (<HomeHeader currentTabIndex={currTabIndex} headerTitle={"Book manager" + header}/>)
+                }
+            });
+            return NewScreen;
+        }
+
         return (
             <Tab.Navigator>
-                <Tab.Screen name="Books" component={BookScreen} options={ ({navigation}) => setCurrentTabIndex(0, navigation)} />
-                <Tab.Screen name="Shelves" component={ShelfScreen} options={ ({navigation}) => setCurrentTabIndex(1, navigation)} />
-                <Tab.Screen name="Settings" component={SettingScreen} options={ ({navigation}) => setCurrentTabIndex(2, navigation)} />
+                <Tab.Screen name="Books" component={BookScreenWithListener} />
+                <Tab.Screen name="Shelves" component={ShelfScreenWithListener} />
+                <Tab.Screen name="Settings" component={SettingScreenWithListener} />
             </Tab.Navigator>
         );
-
-        function setCurrentTabIndex(index, navigation) {  // ham set lai index (vao bien currTabIndex) ung voi tab dang focus hien tai
-            console.log("HomeTabNavigator : " + currTabIndex);
-            if (navigation.isFocused()) setCurrTabIndex(index);
-        }
     }
 }
 

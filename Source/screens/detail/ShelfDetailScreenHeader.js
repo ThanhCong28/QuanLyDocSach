@@ -4,7 +4,7 @@
  *
  * Copyright: Nguyen Thanh Cong - 2021
  */
-import * as React from 'react';
+import React from 'react';
 import {View, Text, Button} from 'react-native';
 import {useNavigation} from "@react-navigation/native";
 
@@ -18,7 +18,7 @@ function ShelfDetailScreenHeader() {
     return (
         <View style={{
             flexDirection: 'row',
-            justifyContent: 'space-between',
+            justifyContent: 'space-evenly',
         }}>
             <Text>ShelfDetails</Text>
             <Button

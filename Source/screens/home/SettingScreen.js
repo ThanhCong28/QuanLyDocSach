@@ -4,8 +4,9 @@
  *
  * Copyright: Nguyen Thanh Cong - 2021
  */
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import { View, Text, StyleSheet, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
+import {useNavigation} from "@react-navigation/native";
 
 const styleSettings = StyleSheet.create({
     container: {
@@ -50,13 +51,22 @@ const dataSettings = [
     },
 ];
 
-function SettingScreen() {
+function SettingScreen( props ) {
     /**
      * Man hinh cua Tab Settings o Home.
      * @returns {JSX.Element} Giao dien man hinh + cac xu li chuyen man hinh
      * @constructor
      */
+
+    const navigation = useNavigation()
     const [selectedId, setSelectedId] = React.useState(null);
+
+    useEffect(() => {
+        if (navigation.isFocused()) {
+            props.onCurrentIndexListener(2);
+            props.onQuantityListener("");
+        }
+    })
 
     const renderItem = ({ item }) => {
         const backgroundColor = item.id === selectedId ? "#00ffff" : "#ff00ff";
