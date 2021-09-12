@@ -5,7 +5,7 @@
  * Copyright: Nguyen Thanh Cong - 2021
  */
 import 'react-native-gesture-handler';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
@@ -51,40 +51,32 @@ function App() {
         const [currTabIndex, setCurrTabIndex] = useState(0);  // bien luu index cua 3 tab tren Home (0, 1, 2)
         const [header, setHeader] = useState('');  // bien luu title o Home
 
-        function BookScreenWithListener() {
-            console.log("HomeTabNavigator at BookScreen bf: " + currTabIndex);
-            let NewScreen = <BookScreen onCurrentIndexListener={setCurrTabIndex} onQuantityListener={setHeader}/>;
+        // Set lại header tương ứng với Tab đang focus
+        useEffect(() => {
+            console.log("HomeTabNavigator, index at setOptions : " + currTabIndex + ", with quantity : " + header);
             navigation.setOptions({
                 headerTitle: () => {
-                    console.log("HomeTabNavigator at BookScreen af: " + currTabIndex);
                     return (<HomeHeader currentTabIndex={currTabIndex} headerTitle={"Book manager" + header}/>)
                 }
-            });
-            return NewScreen;
+            })}
+        )
+
+        function BookScreenWithListener() {
+            console.log("HomeTabNavigator, index at BookScreen : " + currTabIndex + ", with quantity : " + header);
+            // Gọi callback về Tab "Books" để cập nhật tab index hiện tại (0) cũng như title trên header
+            return <BookScreen onCurrentIndexListener={setCurrTabIndex} onQuantityListener={setHeader}/>;
         }
 
         function ShelfScreenWithListener() {
-            console.log("HomeTabNavigato at ShelfScreen bf: " + currTabIndex);
-            let NewScreen = <ShelfScreen onCurrentIndexListener={setCurrTabIndex} onQuantityListener={setHeader}/>;
-            navigation.setOptions({
-                headerTitle: () => {
-                    console.log("HomeTabNavigator at ShelfScreen af: " + currTabIndex);
-                    return (<HomeHeader currentTabIndex={currTabIndex} headerTitle={"Book manager" + header}/>)
-                }
-            });
-            return NewScreen;
+            console.log("HomeTabNavigator, index at ShelfScreen : " + currTabIndex + ", with quantity : " + header);
+            // Gọi callback về Tab "Shelves" để cập nhật tab index hiện tại (1) cũng như title trên header
+            return <ShelfScreen onCurrentIndexListener={setCurrTabIndex} onQuantityListener={setHeader}/>;
         }
 
         function SettingScreenWithListener() {
-            console.log("HomeTabNavigator at SettingScreen bf: " + currTabIndex);
-            let NewScreen = <SettingScreen onCurrentIndexListener={setCurrTabIndex} onQuantityListener={setHeader}/>;
-            navigation.setOptions({
-                headerTitle: () => {
-                    console.log("HomeTabNavigator at SettingScreen af: " + currTabIndex);
-                    return (<HomeHeader currentTabIndex={currTabIndex} headerTitle={"Book manager" + header}/>)
-                }
-            });
-            return NewScreen;
+            console.log("HomeTabNavigator, index at SettingScreen : " + currTabIndex + ", with quantity : " + header);
+            // Gọi callback về Tab "Settings" để cập nhật tab index hiện tại (2) cũng như title trên header
+            return <SettingScreen onCurrentIndexListener={setCurrTabIndex} onQuantityListener={setHeader}/>;
         }
 
         return (

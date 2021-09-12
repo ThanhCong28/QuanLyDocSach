@@ -35,6 +35,7 @@ function BookScreen( props ) {
     useEffect(() => {
         let title = bookList.length <= 1 ? (" (" + bookList.length + " book)") : " (" + bookList.length + " books)";
         if (navigation.isFocused()) {
+            // Cập nhật tab index hiện tại cũng như title trên header ngược về cho HomeTab
             props.onCurrentIndexListener(0);
             props.onQuantityListener(title);
         }

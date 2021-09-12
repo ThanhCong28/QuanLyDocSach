@@ -104,6 +104,7 @@ function ShelfScreen( props ) {
     useEffect(() => {
         let title = (shelfList.length <= 1 ? (" (" + shelfList.length + " shelf)") : " (" + shelfList.length + " shelves)");
         if (navigation.isFocused()) {
+            // Cập nhật tab index hiện tại cũng như title trên header ngược về cho HomeTab
             props.onCurrentIndexListener(1);
             props.onQuantityListener(title);
         }

@@ -63,6 +63,7 @@ function SettingScreen( props ) {
 
     useEffect(() => {
         if (navigation.isFocused()) {
+            // Cập nhật tab index hiện tại cũng như title trên header ngược về cho HomeTab
             props.onCurrentIndexListener(2);
             props.onQuantityListener("");
         }
