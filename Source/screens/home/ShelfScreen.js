@@ -108,7 +108,7 @@ function ShelfScreen( props ) {
             props.onCurrentIndexListener(1);
             props.onQuantityListener(title);
         }
-    })
+    }, [])
 
     const [visible, setVisible] = useState(false);  // Quyết định ẩn / hiện Custom dialog (Cancel-Rename-Delete)
     const [renamePress, setRename] = useState(false);  // biến đếm số lần ấn vào button "Rename"
