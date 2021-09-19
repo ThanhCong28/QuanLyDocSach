@@ -14,9 +14,10 @@ import HomeHeader from './screens/home/HomeHeader';
 import BookScreen from './screens/home/BookScreen';
 import ShelfScreen from './screens/home/ShelfScreen';
 import SettingScreen from './screens/home/SettingScreen';
+import AddBookScreen from "./screens/detail/AddBookScreen";
+import AddBookScreenHeader from "./screens/detail/AddBookScreenHeader";
 import BookDetailScreen from './screens/detail/BookDetailScreen';
 import ShelfDetailScreen from "./screens/detail/ShelfDetailScreen";
-import AddBookScreen from "./screens/detail/AddBookScreen";
 import ShelfDetailScreenHeader from "./screens/detail/ShelfDetailScreenHeader";
 
 const RootStack = createStackNavigator();
@@ -34,9 +35,9 @@ function App() {
         <NavigationContainer>
             <RootStack.Navigator initialRouteName="HomeStackApp" >
                 <RootStack.Screen name="HomeTab" component={HomeTabNavigator} />
+                <RootStack.Screen name="AddBook" component={AddBookScreen}/>
                 <RootStack.Screen name="BookDetails" component={BookDetailScreen} />
                 <RootStack.Screen name="ShelfDetails" component={ShelfDetailScreen} options={{ headerTitle: () => <ShelfDetailScreenHeader/>}} />
-                <RootStack.Screen name="AddBook" component={AddBookScreen} />
             </RootStack.Navigator>
         </NavigationContainer>
     );

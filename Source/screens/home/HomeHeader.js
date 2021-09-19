@@ -14,6 +14,7 @@ const styleHome = StyleSheet.create({
     justifyContent: 'space-between'
   },
   homeText: {
+      fontSize: 25
   },
   homeButton: {
   }
