@@ -29,6 +29,7 @@ function AddBookScreenHeader(props) {
                     console.log("bookIssueDate : " + props.bookItem.bookIssueDate);
                     console.log("bookStartDate : " + props.bookItem.bookStartDate);
                     console.log("bookEndDate : " + props.bookItem.bookEndDate);
+                    console.log("bookNotes : " + props.bookItem.bookNotes);
                     navigation.goBack();
                 }}
             />

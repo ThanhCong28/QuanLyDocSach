@@ -12,12 +12,15 @@ import CalendarIcon from "../../resource/img/calendar.png";
 function CustomDateTimePicker (props) {
     const [date, setDate] = useState(new Date());
     const [show, setShow] = useState(false);
+    const [isPressed, setPressed] = useState(false);
 
     const onChange = (event, selectedDate) => {
-        const currentDate = selectedDate || date;
         setShow(false);
-        setDate(currentDate);
-        props.onDateTimeListener(currentDate);
+        if (selectedDate != null) {  // chỉ set date và hiển thị ra UI khi chọn "OK ở DateTime picker
+            setPressed(true);
+            setDate(selectedDate);
+            props.onDateTimeListener(selectedDate.toLocaleDateString());
+        }
     };
 
     return (
@@ -26,8 +29,9 @@ function CustomDateTimePicker (props) {
                 <TouchableOpacity
                     style={{paddingTop: 15, flexDirection: "row"}}
                     onPress={() => setShow(true)} >
-                    <Text style={{marginLeft: 5, fontSize: 18, color:"#000000",
-                        paddingLeft: 5, paddingRight: 20, paddingTop: 5 }}>{date.toDateString()}
+                    <Text style={{marginLeft: 5, width: 150, fontSize: 18, color:"#000000",
+                        paddingLeft: 5, paddingRight: 20, paddingTop: 5 }}>
+                        {isPressed ? date.toLocaleDateString() : ""}
                     </Text>
                     <Image source={CalendarIcon}/>
                 </TouchableOpacity>
@@ -38,8 +42,10 @@ function CustomDateTimePicker (props) {
                     value={date}
                     mode='date'
                     is24Hour={true}
-                    display="default"
+                    display="calendar"
                     onChange={onChange}
+                    minimumDate={new Date(1950, 1, 1)}
+                    maximumDate={new Date(2040, 1, 1)}
                 />
             )}
         </View>

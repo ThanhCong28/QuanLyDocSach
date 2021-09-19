@@ -113,15 +113,15 @@ function AddBookScreen({navigation}) {
                 <Text style={{height: 60, width: 100,paddingLeft:5,paddingTop: 20,alignContent: 'center',backgroundColor: "#00ffff"}}>End date</Text>
                 <CustomDateTimePicker onDateTimeListener={setEndDate}/>
             </View>
-            {/*/!*Notes*!/*/}
-            {/*<View style={{ flex: 1, flexDirection: 'row', paddingTop: 2, alignItems: 'flex-start',backgroundColor: 'red'}}>*/}
-            {/*    <Text style={{height: 60, width: 100,paddingLeft:5,paddingTop: 20,alignContent: 'center',backgroundColor: "#00ffff"}}>Notes</Text>*/}
-            {/*    <TextInput*/}
-            {/*        style={{height: 60, width: 300,paddingLeft:10, backgroundColor: "#ffff00"}}*/}
-            {/*        onChangeText={setBookTitle}*/}
-            {/*        placeholder={'Enter here'}*/}
-            {/*    />*/}
-            {/*</View>*/}
+            {/*Notes*/}
+            <View style={{ flex: 1, flexDirection: 'row', paddingTop: 2, alignItems: 'flex-start',backgroundColor: 'red'}}>
+                <Text style={{height: 60, width: 100,paddingLeft:5,paddingTop: 20,alignContent: 'center',backgroundColor: "#00ffff"}}>Notes</Text>
+                <TextInput
+                    style={{height: 60, width: 300,paddingLeft:10, backgroundColor: "#ffff00"}}
+                    onChangeText={text => setBookItem({...bookItem, bookNotes: text})}
+                    placeholder={'Enter here'}
+                />
+            </View>
             {/*/!*Cover*!/*/}
             {/*<View style={{ flex: 1, flexDirection: 'row', paddingTop: 2, alignItems: 'flex-start',backgroundColor: 'red'}}>*/}
             {/*    <Text style={{height: 60, width: 100,paddingLeft:5,paddingTop: 20,alignContent: 'center',backgroundColor: "#00ffff"}}> (*) Cover</Text>*/}
