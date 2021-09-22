@@ -27,9 +27,13 @@ function AddBookScreenHeader(props) {
                     console.log("bookTitle : " + props.bookItem.bookTitle);
                     console.log("bookAuthor : " + props.bookItem.bookAuthor);
                     console.log("bookIssueDate : " + props.bookItem.bookIssueDate);
+                    console.log("bookShelf : " + props.bookItem.bookShelf);
+                    console.log("bookProgress : " + props.bookItem.bookProgress);
+                    console.log("bookStatus : " + props.bookItem.bookStatus);
                     console.log("bookStartDate : " + props.bookItem.bookStartDate);
                     console.log("bookEndDate : " + props.bookItem.bookEndDate);
                     console.log("bookNotes : " + props.bookItem.bookNotes);
+                    console.log("bookCover : " + props.bookItem.bookCover);
                     navigation.goBack();
                 }}
             />
