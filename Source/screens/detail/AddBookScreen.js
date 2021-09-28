@@ -11,6 +11,7 @@ import {TextInput} from "react-native-gesture-handler";
 import AddBookScreenHeader from "./AddBookScreenHeader";
 import CustomDateTimePicker from "../common/DateTime";
 import CustomDropDownPicker from "../common/DropDown";
+import CustomProgressBar from "../common/ProgressBar";
 
 function AddBookScreen({navigation}) {
     /**
@@ -24,7 +25,7 @@ function AddBookScreen({navigation}) {
         bookAuthor: '',
         bookIssueDate: '',
         bookShelf: '',
-        bookProgress: '',
+        bookProgress: 0,
         bookStatus: 'New',
         bookStartDate: '',
         bookEndDate: '',
@@ -111,15 +112,11 @@ function AddBookScreen({navigation}) {
                 <CustomDropDownPicker onDropDownListener={setBookShelf}/>
                 <View style={{height: 60, width: 110,backgroundColor: "#ffff00"}}><Text/></View>
             </View>
-            {/*/!*Progress*!/*/}
-            {/*<View style={{ flex: 1, flexDirection: 'row', paddingTop: 2, alignItems: 'flex-start',backgroundColor: 'red'}}>*/}
-            {/*    <Text style={{height: 60, width: 100,paddingLeft:5,paddingTop: 20,alignContent: 'center',backgroundColor: "#00ffff"}}>Progress</Text>*/}
-            {/*    <TextInput*/}
-            {/*        style={{height: 60, width: 300,backgroundColor: "#ffff00"}}*/}
-            {/*        onChangeText={setBookTitle}*/}
-            {/*        placeholder={'Enter here'}*/}
-            {/*    />*/}
-            {/*</View>*/}
+            {/*Progress*/}
+            <View style={{ flex: 1, flexDirection: 'row', paddingTop: 2, alignItems: 'flex-start',backgroundColor: 'red'}}>
+                <Text style={{height: 60, width: 100,paddingLeft:5,paddingTop: 20,alignContent: 'center',backgroundColor: "#00ffff"}}>Progress</Text>
+                <CustomProgressBar onProgressBarListener={setBookProgress}/>
+            </View>
             {/*Status*/}
             <View style={{ flexDirection: 'row', paddingTop: 2, alignItems: 'flex-start',backgroundColor: 'red'}}>
                 <Text style={{height: 60, width: 100,paddingLeft:5,paddingTop: 20,alignContent: 'center',backgroundColor: "#00ffff"}}>Status</Text>
